@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Room</title>
+</head>
+<body>
+    <ul id="messages"></ul>
+    <input type="text" id="myMessage" />
+    <button onclick="sendMessage()">Send</button>
+
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script type="text/javascript">
+        var socket = io();
+        function sendMessage() {
+            var msg = document.getElementById('myMessage').value;
+            socket.send(msg);
+            document.getElementById('myMessage').value = '';
+        }
+        socket.on('message', function(data) {
+            var li = document.createElement('li');
+            li.appendChild(document.createTextNode(data));
+            document.getElementById('messages').appendChild(li);
+        });
+    </script>
+</body>
+</html>
